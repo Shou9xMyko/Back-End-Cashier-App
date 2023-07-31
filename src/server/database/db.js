@@ -16,4 +16,12 @@ const connection = mysql2.createConnection({
   multipleStatements: true,
 });
 
+connection.connect((err) => {
+  if (err) {
+    console.log("Database Failed To Connected!");
+  } else {
+    console.log("Database connected successfully");
+  }
+});
+
 module.exports = connection;
