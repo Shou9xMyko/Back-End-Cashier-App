@@ -19,6 +19,7 @@ const connection = mysql2.createConnection({
 connection.connect((err) => {
   if (err) {
     console.log("Database Failed To Connected!");
+    console.log(err);
   } else {
     console.log("Database connected successfully");
   }
