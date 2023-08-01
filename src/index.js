@@ -41,7 +41,7 @@ app.post("/register", (req, res) => {
   const querySQLCreateTableReportSales = `CREATE TABLE laporan_penjualan_${username} (
     id int NOT NULL AUTO_INCREMENT,
     id_produk int DEFAULT NULL,
-    nomor_pesanan varchar(50) DEFAULT NULL,
+    nomor_pesanan varchar(20) DEFAULT NULL,
     nama_pelanggan varchar(45) DEFAULT NULL,
     kode_produk varchar(10) DEFAULT NULL,
     kategori_produk varchar(20) DEFAULT NULL,
