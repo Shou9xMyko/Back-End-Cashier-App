@@ -4,7 +4,6 @@ const cors = require("cors");
 const connection = require("./server/database/db");
 const API_LOGIN_REGISTER = require("./server/API/apiLoginRegister");
 const API_PRODUCT = require("./server/API/apiProduct");
-const API_PRODUCT_CATHEGORY = require("./server/API/apiProductCathegory");
 const app = express();
 const multipart = require("connect-multiparty");
 const apiReport = require("./server/API/apiReport");
@@ -32,7 +31,7 @@ app.post("/register", (req, res) => {
     harga_produk int DEFAULT NULL,
     stok_produk int DEFAULT NULL,
     gambar_produk varchar(100) DEFAULT NULL,
-    id_gambar_produk varchar(50) DEFAULT NULL,
+    id_gambar_produk varchar(35) DEFAULT NULL,
     createdAt datetime DEFAULT CURRENT_TIMESTAMP,
     updatedAt datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
@@ -42,10 +41,11 @@ app.post("/register", (req, res) => {
     id int NOT NULL AUTO_INCREMENT,
     id_produk int DEFAULT NULL,
     nomor_pesanan varchar(20) DEFAULT NULL,
-    nama_pelanggan varchar(45) DEFAULT NULL,
+    no_meja_pelanggan int DEFAULT NULL,
+    nama_pelanggan varchar(20) DEFAULT NULL,
     kode_produk varchar(10) DEFAULT NULL,
     kategori_produk varchar(20) DEFAULT NULL,
-    nama_produk varchar(35) DEFAULT NULL,
+    nama_produk varchar(30) DEFAULT NULL,
     terjual int DEFAULT NULL,
     harga_produk int DEFAULT NULL,
     metode_pembayaran varchar(25) DEFAULT NULL,
@@ -276,6 +276,7 @@ app.post("/product/laporan-penjualan", (req, res) => {
   const {
     id_produk,
     nomor_pesanan,
+    no_meja_pelanggan,
     nama_pelanggan,
     kode_produk,
     kategori_produk,
@@ -287,7 +288,7 @@ app.post("/product/laporan-penjualan", (req, res) => {
 
   const { username } = req.query;
 
-  const querySQLInsertSalesReport = `INSERT INTO laporan_penjualan_${username} (id_produk, nomor_pesanan, nama_pelanggan, kode_produk, kategori_produk, nama_produk, terjual, harga_produk, metode_pembayaran) VALUES ('${id_produk}', '${nomor_pesanan}', '${nama_pelanggan}', '${kode_produk}' ,'${kategori_produk}', '${nama_produk}', '${terjual}', '${harga_produk}', '${metode_pembayaran}')`;
+  const querySQLInsertSalesReport = `INSERT INTO laporan_penjualan_${username} (id_produk, nomor_pesanan, no_meja_pelanggan, nama_pelanggan, kode_produk, kategori_produk, nama_produk, terjual, harga_produk, metode_pembayaran) VALUES ('${id_produk}', '${nomor_pesanan}', '${no_meja_pelanggan}', '${nama_pelanggan}', '${kode_produk}' ,'${kategori_produk}', '${nama_produk}', '${terjual}', '${harga_produk}', '${metode_pembayaran}')`;
   const querySQLUpdateStockProduct = `UPDATE product_${username} SET stok_produk = stok_produk - ${terjual} WHERE id = ${id_produk}`;
 
   connection.query(querySQLInsertSalesReport, (err, result) => {
